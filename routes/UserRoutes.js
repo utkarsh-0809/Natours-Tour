@@ -3,6 +3,12 @@ const UserController=require('../controllers/UserController');
 const auth=require('../controllers/authController');
 const multer=require('multer');
 
+
+// multer is a middleware for handling multipart/form-data, which is used for uploading files.
+// here we are setting the destination for the uploaded files to 'public/img/users'
+// multer will save the uploaded files in the specified directory
+// and we can access the uploaded files from that directory.
+// The dest property specifies the folder where uploaded files will be temporarily stored.
 const upload=multer({dest:'public/img/users'})
 const router=express.Router();
 router

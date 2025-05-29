@@ -10,7 +10,7 @@ exports.deletModel= Model=>
     let num=(req.params.id);
 
 let doc=   await Model.findByIdAndDelete(num);
-console.log(doc);
+// console.log(doc);
 if(!doc)
 return next(new apiError(`no result found for this query`,404));
 res
@@ -68,7 +68,7 @@ exports.getModel=Model=>
 catchAsync(async (req,res,next)=>{
     
     let num=req.params.id;
-    console.log(num);
+    // console.log(num);
     let doc= await Model.findById(num).populate('reviews');
 
     if(!doc){

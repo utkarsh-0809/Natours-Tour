@@ -144,7 +144,7 @@ tourSchema.pre(/^find/,function(){
     })
 })
 tourSchema.pre(/^find/,function(next){
-    if(!this.maxGroupSize) next() ;
+    if(!this.maxGroupSize) next() ; 
     this.populate({
         path:'guides',
         select:'-__v -passwordChangeAt'

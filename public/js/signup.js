@@ -25,7 +25,7 @@ export async function signUpUser(email,name,password,passwordConfirm){
      //console.log('still watching')
       window.setTimeout(()=>{
         window.location.href='/'
-      },1000)
+      },500)
     }
       catch (err){
         showAlert('error',`${err.message}`)

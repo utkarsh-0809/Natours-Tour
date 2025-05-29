@@ -11,6 +11,9 @@ router.use('/:tourId/review',reviewRouter)
   //   auth.restrict('user'),
   //   reviewController.createReview)
 
+  // router.route() is a cleaner and more organized way to handle http methods for
+  //  same route
+
   router.route('/tours-within/:distance/centre/:latlng/unit/:unit')
   .get(TourController.getTourWithin)
 
@@ -24,7 +27,7 @@ router
   router
   .route('/getMonthly/:year')
   .get(auth.checkToken,
-    auth.restrict('admin,lead-guide','guide'),
+    auth.restrict('admin','lead-guide','guide'),
     TourController.getMonthly)
 
 router

@@ -1,5 +1,7 @@
 class ApiFeatures{
     constructor(query,queryString){
+        // query is model name
+        // queryString is req.query
         this.query=query;
         this.queryString=queryString;
     }
@@ -7,7 +9,7 @@ class ApiFeatures{
      filter(){
         //1A) simple filtering
         let newQuery={...this.queryString};
-        console.log(newQuery);
+        // console.log(newQuery);
         let exclude=['page','sort','limit','fields'];
         exclude.forEach(val=>delete newQuery[val]);
 
@@ -49,7 +51,7 @@ class ApiFeatures{
         const limit=+this.queryString.limit ||100;
         
         const skip=(page-1)*limit;
-        console.log(skip);
+        // console.log(skip);
 
        
         this.query=this.query.skip(skip).limit(limit);

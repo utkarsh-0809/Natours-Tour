@@ -8,7 +8,7 @@ const Review = require('../../models/reviewModel');
 
 
 let db=process.env.DATABASE.replace('<password>',process.env.PASSWORD);
-console.log(process.env.DATABASE)
+// console.log(process.env.DATABASE)
 try{
 mongoose.connect(db ,{
     useNewUrlParser:true,

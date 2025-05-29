@@ -32,7 +32,7 @@ exports.uploadTourImages=upload.fields([
 ])
 
 exports.resizeTourImage=catchAsync(async(req,res,next)=>{
-    console.log(req.files)
+    // console.log(req.files)
     if(!req.files?.imageCover||!req.files?.images)
         return next();
     
@@ -252,7 +252,7 @@ exports.getMonthly=catchAsync(async (req,res,next)=>{
                     tours:{$push:'$name'}
                 }
             },
-            {  // this is usend to add the field
+            {  // this is used to add the field
                 $addFields:{month:'$_id'}
             },
             {
@@ -282,12 +282,14 @@ exports.getTourWithin=catchAsync(async(req,res,next)=>{
     let {distance,latlng,unit}=req.params;
     let [lat,lng]=latlng.split(',');
 
-    console.log(req.params);
+    // console.log(req.params);
 
     if(!lat||!lng)
     return next(new apiError(
     'please enter latlng correctly with format of lat,lng',400));
 
+    //So this line is doing exactly that—converting the distance into radians,
+    //  based on whether the input is in miles or kilometers.
     const radius= unit==='mi'?distance/3963.2:distance/6378.1;
 
 
@@ -322,8 +324,8 @@ exports.getDistance=catchAsync(async (req,res,next)=>{
                     type:"Point",
                     coordinates:[lng*1,lat*1]
                 },
-                distanceField:'distance',
-                distanceMultiplier:0.001
+                distanceField: "distance",  // ← This creates a new field named "distance"
+                distanceMultiplier: 0.001  // ← Converts meters to kilometers
             }
         },
         {

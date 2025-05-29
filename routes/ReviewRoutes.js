@@ -1,4 +1,4 @@
-const reviewController=require('../controllers/reviewController');
+ const reviewController=require('../controllers/reviewController');
 const auth=require('../controllers/authController');
 const express=require('express');
 

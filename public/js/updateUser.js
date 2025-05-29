@@ -23,14 +23,14 @@ export const updatePassword=async(currPassword,newPassword,newConfirm)=>{
         
       const res=  await axios({
             method:'PATCH',
-            url:'http://127.0.0.1:8000/api/v1/user/updatePassword',
+            url:'/api/v1/user/updatePassword',
             data:{
                password:currPassword,
                newpassword:newPassword,
                passwordConfirm:newConfirm
             }
         })
-        console.log(res);
+        // console.log(res);
        
         showAlert('success','updted succuessfully');
     }
@@ -46,12 +46,12 @@ export const updateImage=async(url)=>{
         
       const res=  await axios({
             method:'PATCH',
-            url:'http://127.0.0.1:8000/api/v1/user/updateMe',
+            url:'/api/v1/user/updateMe',
             data:{
                
             }
         })
-        console.log(res);
+        // console.log(res);
        
         showAlert('success','updted succuessfully');
     }

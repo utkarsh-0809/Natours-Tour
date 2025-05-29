@@ -73,7 +73,7 @@ if(this.password) this.password=await bcrypt.hash(this.password, 10)
  userSchema.methods.passwordChangeAfter=(JwtTokenTime)=>{
     if(this.passwordChangeAt){
         let check=parseInt(this.passwordChangeAt.getTime()/1000,10);
-        console.log(check,JwtTokenTime);
+        // console.log(check,JwtTokenTime);
         return JwtTokenTime<check;
     }
     return false;
@@ -97,7 +97,7 @@ if(this.password) this.password=await bcrypt.hash(this.password, 10)
    this.passwordResetTime= Date.now()+ 10*60*1000;
   
    return resetToken;
- }
+ } 
 
  userSchema.pre(/^find/,function(next){
     this.find({active:{$ne:false}});

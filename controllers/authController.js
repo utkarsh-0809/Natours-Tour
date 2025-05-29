@@ -48,6 +48,8 @@ exports.signUp=catchAsync(async(req,res,next)=>{
    })
 
    const url=`${req.protocol}://127.0.0.1:8000/account`
+   // when we send cookie along with response and user goes to account page we will
+   // fetch user data from cookie
    await new Email(user,url).sendWelcome()
    sendResponse(user,200,res)
 });
@@ -56,7 +58,7 @@ exports.signUp=catchAsync(async(req,res,next)=>{
 exports.login=catchAsync(async(req,res,next)=>{
 
     const {email,password}=req.body;
-    console.log(email);
+   //  console.log(email);
     // checking user filled both
     if(!email||!password)
       return  next(new apiError('email and password is neccesary',400));
@@ -71,12 +73,12 @@ exports.login=catchAsync(async(req,res,next)=>{
 });
 
 exports.logout=catchAsync(async (req,res,next)=>{
-   console.log('hiiii');
+   // console.log('hiiii');
    res.cookie('jwt','Tologout',{
       expires:new Date( Date.now()+ 10000),
       httpOnly:true
    });
-   console.log(req.cookies);
+   // console.log(req.cookies);
   res.status(200).json({
    status:"success"
   })
@@ -97,7 +99,7 @@ exports.checkToken=catchAsync( async(req,res,next)=>{
    else if(req.cookies?.jwt){
       token=req.cookies.jwt
    }
-   console.log('token ID',token);
+   // console.log('token ID',token);
    if(!token)
       return next(new apiError('please login to continue',401));
 
@@ -119,7 +121,7 @@ exports.checkToken=catchAsync( async(req,res,next)=>{
     }
 
     req.user=newUser;
-    console.log(req.user);
+   //  console.log(req.user);
 
     next();
 });
@@ -140,7 +142,7 @@ exports.forgotPassword=catchAsync(async(req,res,next)=>{
    // get and check email
 
    
-   console.log(req.body.email);
+   // console.log(req.body.email);
    let user=await User.findOne({email:req.body.email});
 
    if(!user)
@@ -171,7 +173,7 @@ exports.forgotPassword=catchAsync(async(req,res,next)=>{
    //    message:message
    // })
 
-    const url=`${req.protocol}://127.0.0.1/api/v1/user/resetPassword/${resetToken}`;
+    const url=`${req.protocol}://127.0.0.1:8000/api/v1/user/resetPassword/${resetToken}`;
     await new Email(user,url).resetPassword();
    
    res
@@ -221,14 +223,7 @@ exports.resetPassword=catchAsync(async (req,res,next)=>{
   await user.save();
 
 
-//   const token=generateToken(user._id);
 
-//   res.status(200)
-//   .json({
-//    status:"success",
-//    user,
-//    token
-//   })
 sendResponse(user,200,res)
 
 });
@@ -239,8 +234,8 @@ exports.updatePassword =catchAsync(async(req,res,next)=>{
 
    // check if user exists in collection
   // console.log(req.user);
-  console.log(req.body);
-  console.log(req.user);
+//   console.log(req.body);
+//   console.log(req.user);
    const user=await User.findById(
       // email:req.body.email
       req.user.id  
@@ -268,13 +263,6 @@ exports.updatePassword =catchAsync(async(req,res,next)=>{
   })
 })
 
-
-
-
-
-
-
-
 exports.isLoggedInUi= async(req,res,next)=>{
 
     if(req.cookies){
@@ -294,15 +282,14 @@ exports.isLoggedInUi= async(req,res,next)=>{
 
     if(!newUser)
       return next();
-
-    // check if the password was changed after the token was generated
-
     if(newUser.passwordChangeAfter(decode.iat)){
       return next();
     }
 
     res.locals.user=newUser;
-   //  console.log(res.locals.user);
+    // this is for fronted
+    // anything we put in res.locals will be available in the views
+    // so we can use it in the views
 
     return next();
 

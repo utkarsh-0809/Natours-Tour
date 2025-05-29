@@ -22,9 +22,13 @@ exports.getChekoutSession=catchAsync(async (req,res,next)=>{
 
     const session =await stripe.checkout.sessions.create({
         payment_method_types:['card'],
+        // since in success url we are passing tour id, user id and price as 
+        // query parameters, the route that will be hit after payment is / route
+        // that is a view / route therefore we handeled it in view route
+
         success_url:`${req.protocol}://${req.get('host')}/?tour=${tour.id}&user=${
             req.user.id}&price=${tour.price}`,
-        cancel_url:`${req.protocol}://${req.get('host')}/tours/${tour.slug}`,
+        cancel_url:`${req.protocol}://${req.get('host')}/`,
         customer_email:req.user.email,
         client_reference_id:req.params.tourId,
         mode: 'payment',// add by me after exploring documents
@@ -52,6 +56,8 @@ exports.getChekoutSession=catchAsync(async (req,res,next)=>{
 
 
 exports.createBookings=catchAsync(async(req,res,next)=>{
+    //this is ontly temporary code to create bookings
+    // it will be removed later
     if(!req.query) return next();
     const {tour,user,price}=req.query;
 

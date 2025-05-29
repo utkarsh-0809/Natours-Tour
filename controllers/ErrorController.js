@@ -27,7 +27,7 @@ function sendErrProd(err,res){
     }
 
     else{
-        console.error('Erorrrrrrrr',err)
+        // console.error('Erorrrrrrrr',err)
 
         res.status(err.statusCode)
         .json({

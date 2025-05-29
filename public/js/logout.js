@@ -3,19 +3,21 @@ import axios from "axios";
 export async function logout(){
     // console.log(email,password)
     // console.log('done')
-    console.log('checking...1')
+    // console.log('checking...1')
     try{
      const res= await axios({
         method:'GET',
-        url:'http://localhost:8000/api/v1/user/logout',
+        url:'/api/v1/user/logout',
+        // this will work on deployed version because both 
+        // backend and frontend will be on same domain
         
       })
-      console.log('checking...')
+      // console.log('checking...')
    showAlert('success','Logged out successfully');
 
       window.setTimeout(()=>{
         window.location.href='/'
-      },1000)
+      },500)
     }
       catch (err){
         showAlert('error',err.response?.data)

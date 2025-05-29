@@ -5,8 +5,6 @@ const factory=require('./factoryController');
 const multer=require('multer');
 const sharp=require('sharp');
 
-
-
 // const multerStorage=multer.diskStorage({
 //     destination:(req,file,callback)=>{
 //         callback(null,'public/img/users')
@@ -27,6 +25,7 @@ const multerfilter=(req,file,callback)=>{
         func(new(apiError('message',400),false));
     }
 }
+
 const upload=multer({
     storage:multerStorage,
     fileFilter:multerfilter
@@ -46,7 +45,6 @@ exports.resizePhoto=catchAsync(async (req,res,next)=>{
 
     next();
 })
-
 
 
 exports.imageUpload=upload.single('photo');
@@ -75,21 +73,21 @@ function filterQuery(obj,...fields){
 exports.getMe=async(req,res,next)=>{
     req.params.id=req.user.id;
     next();
-}
+} 
 
 exports.updateMe=catchAsync(async(req,res,next)=>{
 
     if(req.body.password||req.body.passwordConfirm)
         return next(new apiError('cannot update password from this link please follow-/updatePassword'));
-    console.log(req.body);
-    console.log(req.file);
+    // console.log(req.body);
+    // console.log(req.file);
 
     const updatedUser=filterQuery(req.body,'name','email');
     if(req.file?.filename) updatedUser.photo=req.file.filename
     const updateUser=await User.findByIdAndUpdate(req.user.id,updatedUser,{
         new:true,
         runValidators:true
-    })
+    }) 
     // console.log(updateUser);
     res.status(200)
     .json({
@@ -129,8 +127,7 @@ exports.updateRoles=catchAsync(async function (req,res,next){
 })
 
 
-
 exports.getUser=factory.getModel(User);
 exports.getAllUsers=factory.getAllModel(User);
 exports.deleteUser=factory.deletModel(User);
-exports.updateUser=factory.updateModel(User);
+exports.updateUser=factory.updateModel(User); 
